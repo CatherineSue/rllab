@@ -349,6 +349,7 @@ def run_experiment_lite(
         aws_config=None,
         env=None,
         variant=None,
+        use_tf=False,
         use_gpu=False,
         sync_s3_pkl=False,
         sync_s3_png=False,
@@ -376,6 +377,7 @@ def run_experiment_lite(
     :param env: extra environment variables
     :param kwargs: All other parameters will be passed directly to the entrance python script.
     :param variant: If provided, should be a dictionary of parameters
+    :param use_tf: this flag is used along with the Theano and GPU configuration when using TensorFlow
     :param use_gpu: Whether the launched task is running on GPU. This triggers a few configuration changes including
     certain environment flags
     :param sync_s3_pkl: Whether to sync pkl files during execution of the experiment (they will always be synced at
@@ -421,6 +423,13 @@ def run_experiment_lite(
     global exp_count
     global remote_confirmed
     config.USE_GPU = use_gpu
+    config.USE_TF = use_tf
+
+    if use_tf:
+        if not use_gpu:
+            os.environ['CUDA_VISIBLE_DEVICES'] = ""
+        else:
+            os.unsetenv('CUDA_VISIBLE_DEVICES')
 
     # params_list = []
 
