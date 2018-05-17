@@ -468,6 +468,7 @@ def run_experiment_lite(stub_method_call=None,
                                           task["exp_name"])
         task["env"] = task.get("env", dict()) or dict()
         task["env"]["RLLAB_USE_GPU"] = str(use_gpu)
+        task["env"]["RLLAB_USE_TF"] = str(use_tf)
 
     if mode not in ["local", "local_docker"
                     ] and not remote_confirmed and not dry and confirm_remote:
