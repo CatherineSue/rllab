@@ -1,3 +1,3 @@
-from .base import TfEnv
-from .parallel_vec_env_executor import ParallelVecEnvExecutor
-from .vec_env_executor import VecEnvExecutor
+from sandbox.rocky.tf.envs.base import TfEnv
+from sandbox.rocky.tf.envs.parallel_vec_env_executor import ParallelVecEnvExecutor
+from sandbox.rocky.tf.envs.vec_env_executor import VecEnvExecutor
