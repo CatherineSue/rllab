@@ -1,3 +1,6 @@
+
+
+
 import tensorflow as tf
 import numpy as np
 from sandbox.rocky.tf.distributions import Distribution
@@ -58,8 +61,7 @@ class DiagonalGaussian(Distribution):
         return tf.reduce_sum(
             numerator / denominator + new_log_stds - old_log_stds, axis=-1)
 
-    def likelihood_ratio_sym(self, x_var, old_dist_info_vars,
-                             new_dist_info_vars):
+    def likelihood_ratio_sym(self, x_var, old_dist_info_vars, new_dist_info_vars):
         logli_new = self.log_likelihood_sym(x_var, new_dist_info_vars)
         logli_old = self.log_likelihood_sym(x_var, old_dist_info_vars)
         return tf.exp(logli_new - logli_old)
@@ -92,9 +94,8 @@ class DiagonalGaussian(Distribution):
 
     def entropy_sym(self, dist_info_var):
         log_std_var = dist_info_var["log_std"]
-        return tf.reduce_sum(
-            log_std_var + np.log(np.sqrt(2 * np.pi * np.e)), axis=-1)
+        return tf.reduce_sum(log_std_var + np.log(np.sqrt(2 * np.pi * np.e)), axis=-1)
 
     @property
     def dist_info_specs(self):
-        return [("mean", (self.dim, )), ("log_std", (self.dim, ))]
+        return [("mean", (self.dim,)), ("log_std", (self.dim,))]

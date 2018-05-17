@@ -11,6 +11,7 @@ from rllab.misc.instrument import VariantGenerator, variant
 
 
 class VG(VariantGenerator):
+
     @variant
     def step_size(self):
         return [0.01, 0.05, 0.1]
@@ -22,15 +23,14 @@ class VG(VariantGenerator):
 
 def run_task(vv):
 
-    env = TfEnv(
-        normalize(
-            GymEnv('HalfCheetah-v1', record_video=False, record_log=False)))
+    env = TfEnv(normalize(GymEnv('HalfCheetah-v1', record_video=False, record_log=False)))
 
     policy = GaussianMLPPolicy(
         env_spec=env.spec,
         # The neural network policy should have two hidden layers, each with 32 hidden units.
         hidden_sizes=(32, 32),
-        name="policy")
+        name="policy"
+    )
 
     baseline = LinearFeatureBaseline(env_spec=env.spec)
 

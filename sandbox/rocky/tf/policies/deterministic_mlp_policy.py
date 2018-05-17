@@ -15,20 +15,21 @@ import tensorflow as tf
 
 
 class DeterministicMLPPolicy(Policy, LayersPowered, Serializable):
-    def __init__(self,
-                 name,
-                 env_spec,
-                 hidden_sizes=(32, 32),
-                 hidden_nonlinearity=tf.nn.relu,
-                 output_nonlinearity=tf.nn.tanh,
-                 prob_network=None,
-                 bn=False):
+    def __init__(
+            self,
+            name,
+            env_spec,
+            hidden_sizes=(32, 32),
+            hidden_nonlinearity=tf.nn.relu,
+            output_nonlinearity=tf.nn.tanh,
+            prob_network=None,
+            bn=False):
         Serializable.quick_init(self, locals())
 
         with tf.variable_scope(name):
             if prob_network is None:
                 prob_network = MLP(
-                    input_shape=(env_spec.observation_space.flat_dim, ),
+                    input_shape=(env_spec.observation_space.flat_dim,),
                     output_dim=env_spec.action_space.flat_dim,
                     hidden_sizes=hidden_sizes,
                     hidden_nonlinearity=hidden_nonlinearity,
@@ -41,7 +42,8 @@ class DeterministicMLPPolicy(Policy, LayersPowered, Serializable):
             self._l_obs = prob_network.input_layer
             self._f_prob = tensor_utils.compile_function(
                 [prob_network.input_layer.input_var],
-                L.get_output(prob_network.output_layer, deterministic=True))
+                L.get_output(prob_network.output_layer, deterministic=True)
+            )
 
         self.prob_network = prob_network
 
@@ -55,7 +57,7 @@ class DeterministicMLPPolicy(Policy, LayersPowered, Serializable):
     @property
     def vectorized(self):
         return True
-
+        
     @overrides
     def get_action(self, observation):
         flat_obs = self.observation_space.flatten(observation)

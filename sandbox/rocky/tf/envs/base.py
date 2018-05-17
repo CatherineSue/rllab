@@ -27,8 +27,7 @@ class WrappedCls(object):
         self.extra_kwargs = extra_kwargs
 
     def __call__(self, *args, **kwargs):
-        return self.cls(
-            self.env_cls(*args, **dict(self.extra_kwargs, **kwargs)))
+        return self.cls(self.env_cls(*args, **dict(self.extra_kwargs, **kwargs)))
 
 
 class TfEnv(ProxyEnv):
@@ -52,9 +51,7 @@ class TfEnv(ProxyEnv):
         return getattr(self.wrapped_env, "vectorized", False)
 
     def vec_env_executor(self, n_envs, max_path_length):
-        return VecTfEnv(
-            self.wrapped_env.vec_env_executor(
-                n_envs=n_envs, max_path_length=max_path_length))
+        return VecTfEnv(self.wrapped_env.vec_env_executor(n_envs=n_envs, max_path_length=max_path_length))
 
     @classmethod
     def wrap(cls, env_cls, **extra_kwargs):
@@ -63,6 +60,7 @@ class TfEnv(ProxyEnv):
 
 
 class VecTfEnv(object):
+
     def __init__(self, vec_env):
         self.vec_env = vec_env
 

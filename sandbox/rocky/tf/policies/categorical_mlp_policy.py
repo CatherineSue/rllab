@@ -35,7 +35,7 @@ class CategoricalMLPPolicy(StochasticPolicy, LayersPowered, Serializable):
         with tf.variable_scope(name):
             if prob_network is None:
                 prob_network = MLP(
-                    input_shape=(env_spec.observation_space.flat_dim, ),
+                    input_shape=(env_spec.observation_space.flat_dim,),
                     output_dim=env_spec.action_space.n,
                     hidden_sizes=hidden_sizes,
                     hidden_nonlinearity=hidden_nonlinearity,
@@ -47,7 +47,8 @@ class CategoricalMLPPolicy(StochasticPolicy, LayersPowered, Serializable):
             self._l_obs = prob_network.input_layer
             self._f_prob = tensor_utils.compile_function(
                 [prob_network.input_layer.input_var],
-                L.get_output(prob_network.output_layer))
+                L.get_output(prob_network.output_layer)
+            )
 
             self._dist = Categorical(env_spec.action_space.n)
 
@@ -60,9 +61,7 @@ class CategoricalMLPPolicy(StochasticPolicy, LayersPowered, Serializable):
 
     @overrides
     def dist_info_sym(self, obs_var, state_info_vars=None):
-        return dict(
-            prob=L.get_output(self._l_prob,
-                              {self._l_obs: tf.cast(obs_var, tf.float32)}))
+        return dict(prob=L.get_output(self._l_prob, {self._l_obs: tf.cast(obs_var, tf.float32)}))
 
     @overrides
     def dist_info(self, obs, state_infos=None):
