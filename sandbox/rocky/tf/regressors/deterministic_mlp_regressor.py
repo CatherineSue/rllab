@@ -1,9 +1,3 @@
-
-
-
-
-
-
 import numpy as np
 
 import tensorflow as tf
@@ -62,34 +56,34 @@ class DeterministicMLPRegressor(LayersPowered, Serializable):
                     hidden_sizes=hidden_sizes,
                     hidden_nonlinearity=hidden_nonlinearity,
                     output_nonlinearity=output_nonlinearity,
-                    name="network"
-                )
+                    name="network")
 
             l_out = network.output_layer
 
             LayersPowered.__init__(self, [l_out])
 
             xs_var = network.input_layer.input_var
-            ys_var = tf.placeholder(dtype=tf.float32, shape=[None, output_dim], name="ys")
+            ys_var = tf.placeholder(
+                dtype=tf.float32, shape=[None, output_dim], name="ys")
 
             x_mean_var = tf.get_variable(
                 name="x_mean",
-                shape=(1,) + input_shape,
-                initializer=tf.constant_initializer(0., dtype=tf.float32)
-            )
+                shape=(1, ) + input_shape,
+                initializer=tf.constant_initializer(0., dtype=tf.float32))
             x_std_var = tf.get_variable(
                 name="x_std",
-                shape=(1,) + input_shape,
-                initializer=tf.constant_initializer(1., dtype=tf.float32)
-            )
+                shape=(1, ) + input_shape,
+                initializer=tf.constant_initializer(1., dtype=tf.float32))
 
             normalized_xs_var = (xs_var - x_mean_var) / x_std_var
 
-            fit_ys_var = L.get_output(l_out, {network.input_layer: normalized_xs_var})
+            fit_ys_var = L.get_output(l_out,
+                                      {network.input_layer: normalized_xs_var})
 
-            loss = - tf.reduce_mean(tf.square(fit_ys_var - ys_var))
+            loss = -tf.reduce_mean(tf.square(fit_ys_var - ys_var))
 
-            self.f_predict = tensor_utils.compile_function([xs_var], fit_ys_var)
+            self.f_predict = tensor_utils.compile_function([xs_var],
+                                                           fit_ys_var)
 
             optimizer_args = dict(
                 loss=loss,

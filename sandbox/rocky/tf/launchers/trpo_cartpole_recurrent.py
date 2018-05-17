@@ -29,6 +29,6 @@ algo = TRPO(
     n_itr=10,
     discount=0.99,
     step_size=0.01,
-    optimizer=ConjugateGradientOptimizer(hvp_approach=FiniteDifferenceHvp(base_eps=1e-5))
-)
+    optimizer=ConjugateGradientOptimizer(
+        hvp_approach=FiniteDifferenceHvp(base_eps=1e-5)))
 algo.train()
