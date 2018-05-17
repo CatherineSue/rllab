@@ -1,8 +1,8 @@
 from rllab.baselines.linear_feature_baseline import LinearFeatureBaseline
 from rllab.envs.normalized_env import normalize
-from sandbox.rocky.tf.envs.base import TfEnv
-from sandbox.rocky.tf.policies.gaussian_mlp_policy import GaussianMLPPolicy
-from sandbox.rocky.tf.algos.trpo import TRPO
+from sandbox.rocky.tf.envs import TfEnv
+from sandbox.rocky.tf.policies import GaussianMLPPolicy
+from sandbox.rocky.tf.algos import TRPO
 from rllab.misc.instrument import run_experiment_lite
 from rllab.envs.gym_env import GymEnv
 import sys

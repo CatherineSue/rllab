@@ -1,4 +1,4 @@
-from sandbox.rocky.tf.policies.base import Policy
+from sandbox.rocky.tf.policies import Policy
 from rllab.core.serializable import Serializable
 
 

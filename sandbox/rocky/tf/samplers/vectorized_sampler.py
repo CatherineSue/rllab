@@ -2,8 +2,8 @@ import pickle
 
 import tensorflow as tf
 from rllab.sampler.base import BaseSampler
-from sandbox.rocky.tf.envs.parallel_vec_env_executor import ParallelVecEnvExecutor
-from sandbox.rocky.tf.envs.vec_env_executor import VecEnvExecutor
+from sandbox.rocky.tf.envs import ParallelVecEnvExecutor
+from sandbox.rocky.tf.envs import VecEnvExecutor
 from rllab.misc import tensor_utils
 import numpy as np
 from rllab.sampler.stateful_pool import ProgBarCounter
